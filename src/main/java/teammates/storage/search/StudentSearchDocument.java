@@ -22,16 +22,30 @@ class StudentSearchDocument extends SearchDocument<StudentAttributes> {
     Map<String, Object> getSearchableFields() {
         Map<String, Object> fields = new HashMap<>();
         StudentAttributes student = attribute;
+          String regStatus = student.isRegistered() ? "REGISTERED" : "UNREGISTERED";
+
         String[] searchableTexts = {
                 student.getName(), student.getEmail(), student.getCourse(),
                 course == null ? "" : course.getName(),
                 student.getTeam(), student.getSection(),
+                regStatus
         };
+        
+                        
+        
 
         fields.put("id", student.getId());
         fields.put("_text_", String.join(" ", searchableTexts));
         fields.put("courseId", student.getCourse());
         fields.put("email", student.getEmail());
+
+        fields.put("name", student.getName());
+        fields.put("team", student.getTeam());
+        fields.put("section", student.getSection());
+
+        //registered users search
+        fields.put("isRegistered", regStatus);
+        
 
         return fields;
     }
