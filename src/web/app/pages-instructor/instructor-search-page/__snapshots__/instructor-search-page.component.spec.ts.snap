@@ -21,7 +21,7 @@ exports[`InstructorSearchPageComponent should snap with a search key 1`] = `
         <div
           class="text-muted"
         >
-           You can search for students (by section name, team name, student name, or email) from all your courses here. 
+           You can search for students (by section, team name, student name, or email) from all your courses here. 
         </div>
         <div
           class="text-muted"
@@ -38,6 +38,12 @@ exports[`InstructorSearchPageComponent should snap with a search key 1`] = `
                 "[any word]"
               </b>
                to search for an exact phrase in an exact order. e.g. "John Doe".
+            </li>
+            <li>
+              To To filter search results, type multiple keywords (e.g., section, team, name, email) into the search box. For example: David team 5
+            </li>
+            <li>
+              To view students who are unregistered in a class or section insert the section or class name followed by "UNREGISTERED". e.g "Team Rocket "UNREGISTERED""
             </li>
           </ul>
         </div>
@@ -93,7 +99,7 @@ exports[`InstructorSearchPageComponent should snap with a student table 1`] = `
         <div
           class="text-muted"
         >
-           You can search for students (by section name, team name, student name, or email) from all your courses here. 
+           You can search for students (by section, team name, student name, or email) from all your courses here. 
         </div>
         <div
           class="text-muted"
@@ -110,6 +116,12 @@ exports[`InstructorSearchPageComponent should snap with a student table 1`] = `
                 "[any word]"
               </b>
                to search for an exact phrase in an exact order. e.g. "John Doe".
+            </li>
+            <li>
+              To To filter search results, type multiple keywords (e.g., section, team, name, email) into the search box. For example: David team 5
+            </li>
+            <li>
+              To view students who are unregistered in a class or section insert the section or class name followed by "UNREGISTERED". e.g "Team Rocket "UNREGISTERED""
             </li>
           </ul>
         </div>
@@ -592,7 +604,7 @@ exports[`InstructorSearchPageComponent should snap with default fields 1`] = `
         <div
           class="text-muted"
         >
-           You can search for students (by section name, team name, student name, or email) from all your courses here. 
+           You can search for students (by section, team name, student name, or email) from all your courses here. 
         </div>
         <div
           class="text-muted"
@@ -609,6 +621,12 @@ exports[`InstructorSearchPageComponent should snap with default fields 1`] = `
                 "[any word]"
               </b>
                to search for an exact phrase in an exact order. e.g. "John Doe".
+            </li>
+            <li>
+              To To filter search results, type multiple keywords (e.g., section, team, name, email) into the search box. For example: David team 5
+            </li>
+            <li>
+              To view students who are unregistered in a class or section insert the section or class name followed by "UNREGISTERED". e.g "Team Rocket "UNREGISTERED""
             </li>
           </ul>
         </div>
