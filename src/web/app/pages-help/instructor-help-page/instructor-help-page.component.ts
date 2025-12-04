@@ -1,5 +1,12 @@
 import { DOCUMENT } from '@angular/common';
-import { AfterViewInit, Component, Inject, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  ElementRef, // MOHAMED: used to control the search input DOM element
+  HostListener, // MOHAMED: used to listen for global keyboard shortcuts
+  Inject,
+  ViewChild,
+} from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { PageScrollService } from 'ngx-page-scroll-core';
 import {
@@ -47,6 +54,9 @@ export class InstructorHelpPageComponent implements AfterViewInit {
   @ViewChild('sessionsHelpSection') sessionsHelpSection?: InstructorHelpSessionsSectionComponent;
   @ViewChild('questionsHelpSection') questionsHelpSection?: InstructorHelpQuestionsSectionComponent;
   @ViewChild('generalHelpSection') generalHelpSection?: InstructorHelpGeneralSectionComponent;
+
+  // MOHAMED: reference to the search input so we can focus it from keyboard shortcuts
+  @ViewChild('searchInput') searchInput?: ElementRef<HTMLInputElement>;
 
   constructor(private route: ActivatedRoute,
               private pageScrollService: PageScrollService,
@@ -132,6 +142,8 @@ export class InstructorHelpPageComponent implements AfterViewInit {
   clear(): void {
     this.searchTerm = '';
     this.key = '';
+    // MOHAMED: also clear the result counter when the user clears the search
+    this.matchFound = 0;
   }
 
   /**
@@ -156,4 +168,33 @@ export class InstructorHelpPageComponent implements AfterViewInit {
     this.matchFound += n;
   }
 
+  // MOHAMED: global keyboard shortcuts for the help page
+  // - '/' focuses the search box (common pattern for search-heavy tools)
+  // - 'Escape' clears the current search and results
+  @HostListener('window:keydown', ['$event'])
+  handleKeydown(event: KeyboardEvent): void {
+    const target: EventTarget | null = event.target;
+
+    // Do not steal focus if the user is already typing in an input/textarea/select
+    const isEditableElement: boolean =
+      !!target && target instanceof HTMLElement &&
+      (target.tagName === 'INPUT' ||
+        target.tagName === 'TEXTAREA' ||
+        target.isContentEditable ||
+        target.tagName === 'SELECT');
+
+    // Focus the search input when '/' is pressed outside editable fields
+    if (event.key === '/' && !isEditableElement) {
+      event.preventDefault();
+      if (this.searchInput?.nativeElement) {
+        this.searchInput.nativeElement.focus();
+      }
+      return;
+    }
+
+    // Allow Esc to quickly clear the search from anywhere on the help page
+    if (event.key === 'Escape') {
+      this.clear();
+    }
+  }
 }

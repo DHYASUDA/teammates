@@ -11,10 +11,21 @@
         <div class="row">
           <div class="col-md-9">
             <div class="input-group">
-              <input type="text" [(ngModel)]="searchTerm" class="form-control" placeholder="How can we help?" (keyup.enter)="search()">
+              <!-- MOHAMED: added #searchInput so the component can focus this field from keyboard shortcuts -->
+              <input
+                #searchInput
+                type="text"
+                [(ngModel)]="searchTerm"
+                class="form-control"
+                placeholder="How can we help?"
+                (keyup.enter)="search()">
               <button class="btn btn-primary" (click)="search()"><i class="fas fa-search"></i></button>
               <button class="btn btn-danger" (click)="clear()"><i class="fas fa-times"></i></button>
             </div>
+            <!-- MOHAMED: hint so users discover the new keyboard shortcuts -->
+            <small class="keyboard-hint text-muted">
+              Tip: Press <kbd>/</kbd> to focus the search, <kbd>Esc</kbd> to clear it.
+            </small>
           </div>
         </div>
         <div *ngIf="key" style="margin-top: 20px;">
