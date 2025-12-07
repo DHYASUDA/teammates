@@ -13,10 +13,4 @@ export class StudentHelpPageComponent {
 
   readonly supportEmail: string = environment.supportEmail;
 
-  scroll(anchor: string): void {
-    const el = document.getElementById(anchor);
-    if (el) {
-      el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
-  }
 }
