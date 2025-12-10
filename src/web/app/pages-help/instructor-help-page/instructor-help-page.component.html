@@ -5,16 +5,45 @@
       <div>
         <p>
           Have questions about how to use TEAMMATES? This page answers some frequently asked questions.
-          <br> If you are new to TEAMMATES, our <a [tmRouterLink]="instructorGettingStartedPath">Getting Started</a> guide will introduce you to the basic functions of TEAMMATES.
-          <br> If you have any remaining questions, don't hesitate to <a href="mailto:{{ supportEmail }}">email us</a>. We usually respond within 24 hours.
+          <br> If you are new to TEAMMATES, our
+          <a [tmRouterLink]="instructorGettingStartedPath">Getting Started</a>
+          guide will introduce you to the basic functions of TEAMMATES.
+          <br>
+          If you have any remaining questions, don't hesitate to
+          <a href="mailto:{{ supportEmail }}">email us</a>.
+          We usually respond within 24 hours.
+          <span class="copy-email-actions">
+            <!-- MOHAMED: button that copies the support email to the clipboard -->
+            <button
+              type="button"
+              class="btn btn-link btn-sm btn-copy-email"
+              (click)="copySupportEmail()">
+              <i class="fas fa-copy"></i> Copy email
+            </button>
+            <!-- MOHAMED: short feedback text after clicking "Copy email" -->
+            <span class="copy-email-status" *ngIf="copyStatus">
+              {{ copyStatus }}
+            </span>
+          </span>
         </p>
         <div class="row">
           <div class="col-md-9">
             <div class="input-group">
-              <input type="text" [(ngModel)]="searchTerm" class="form-control" placeholder="How can we help?" (keyup.enter)="search()">
+              <!-- MOHAMED: added #searchInput so the component can focus this field from keyboard shortcuts -->
+              <input
+                #searchInput
+                type="text"
+                [(ngModel)]="searchTerm"
+                class="form-control"
+                placeholder="How can we help?"
+                (keyup.enter)="search()">
               <button class="btn btn-primary" (click)="search()"><i class="fas fa-search"></i></button>
               <button class="btn btn-danger" (click)="clear()"><i class="fas fa-times"></i></button>
             </div>
+            <!-- MOHAMED: hint so users discover the new keyboard shortcuts -->
+            <small class="keyboard-hint text-muted">
+              Tip: Press <kbd>/</kbd> to focus the search, <kbd>Esc</kbd> to clear it.
+            </small>
           </div>
         </div>
         <div *ngIf="key" style="margin-top: 20px;">
@@ -24,23 +53,40 @@
       </div>
     </div>
     <div id="{{Sections.students}}" class="section-body">
-      <tm-instructor-help-students-section #studentsHelpSection [key]="key" (matchFound)="updateMatchFoundNumber($event)">
+      <tm-instructor-help-students-section
+        #studentsHelpSection
+        [key]="key"
+        (matchFound)="updateMatchFoundNumber($event)">
       </tm-instructor-help-students-section>
     </div>
     <div id="{{Sections.courses}}" class="section-body">
-      <tm-instructor-help-courses-section #coursesHelpSection [key]="key" (matchFound)="updateMatchFoundNumber($event)" (collapseStudentEditDetails)="collapseStudentEditDetails()">
+      <tm-instructor-help-courses-section
+        #coursesHelpSection
+        [key]="key"
+        (matchFound)="updateMatchFoundNumber($event)"
+        (collapseStudentEditDetails)="collapseStudentEditDetails()">
       </tm-instructor-help-courses-section>
     </div>
     <div id="{{Sections.sessions}}" class="section-body">
-      <tm-instructor-help-sessions-section #sessionsHelpSection [key]="key" (matchFound)="updateMatchFoundNumber($event)">
+      <tm-instructor-help-sessions-section
+        #sessionsHelpSection
+        [key]="key"
+        (matchFound)="updateMatchFoundNumber($event)">
       </tm-instructor-help-sessions-section>
     </div>
     <div id="{{Sections.questions}}" class="section-body">
-      <tm-instructor-help-questions-section #questionsHelpSection [key]="key" (matchFound)="updateMatchFoundNumber($event)" (collapsePeerEvalTips)="collapsePeerEvalTips()">
+      <tm-instructor-help-questions-section
+        #questionsHelpSection
+        [key]="key"
+        (matchFound)="updateMatchFoundNumber($event)"
+        (collapsePeerEvalTips)="collapsePeerEvalTips()">
       </tm-instructor-help-questions-section>
     </div>
     <div id="{{Sections.general}}" class="section-body">
-      <tm-instructor-help-general-section #generalHelpSection [key]="key" (matchFound)="updateMatchFoundNumber($event)">
+      <tm-instructor-help-general-section
+        #generalHelpSection
+        [key]="key"
+        (matchFound)="updateMatchFoundNumber($event)">
       </tm-instructor-help-general-section>
     </div>
   </div>
@@ -70,7 +116,9 @@
     <br>
     <ul class="nav nav-pills flex-column">
       <li class="nav-item">
-        <a (click)="scroll(Sections.body)" [tmRouterLink]="[]">Back to Top <i class="fas fa-arrow-up"></i> </a>
+        <a (click)="scroll(Sections.body)" [tmRouterLink]="[]">
+          Back to Top <i class="fas fa-arrow-up"></i>
+        </a>
       </li>
     </ul>
   </div>

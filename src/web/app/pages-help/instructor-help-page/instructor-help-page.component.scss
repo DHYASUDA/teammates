@@ -14,6 +14,30 @@
   padding-bottom: 5px;
 }
 
+/* MOHAMED: subtle styling for the keyboard shortcuts hint under the search box */
+.keyboard-hint {
+  display: inline-block;
+  margin-top: 4px;
+  font-size: 0.85rem;
+}
+
+/* MOHAMED: layout + sizing for the copy-email button and its status text */
+.copy-email-actions {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  margin-left: 4px;
+}
+
+.btn-copy-email {
+  padding: 0;
+  font-size: 0.9rem;
+}
+
+.copy-email-status {
+  font-size: 0.85rem;
+}
+
 @media (width <= 992px) {
   .side-nav {
     display: none;

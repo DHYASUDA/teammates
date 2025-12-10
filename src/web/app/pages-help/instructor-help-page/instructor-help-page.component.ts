@@ -1,5 +1,12 @@
 import { DOCUMENT } from '@angular/common';
-import { AfterViewInit, Component, Inject, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,    // MOHAMED: needed to focus the search box from code
+  HostListener,  // MOHAMED: listen for keyboard shortcuts ("/" and "Esc")
+  Inject,
+  ViewChild,
+} from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { PageScrollService } from 'ngx-page-scroll-core';
 import {
@@ -42,6 +49,12 @@ export class InstructorHelpPageComponent implements AfterViewInit {
   questionIdToExpand: string = '';
   section: string = '';
 
+  // MOHAMED: track a short status message for the copy-email button
+  copyStatus: string = '';
+
+  // MOHAMED: reference to the main search input so we can focus it via keyboard shortcuts
+  @ViewChild('searchInput') searchInput?: ElementRef<HTMLInputElement>;
+
   @ViewChild('studentsHelpSection') studentsHelpSection?: InstructorHelpStudentsSectionComponent;
   @ViewChild('coursesHelpSection') coursesHelpSection?: InstructorHelpCoursesSectionComponent;
   @ViewChild('sessionsHelpSection') sessionsHelpSection?: InstructorHelpSessionsSectionComponent;
@@ -74,6 +87,54 @@ export class InstructorHelpPageComponent implements AfterViewInit {
       }
     });
     this.scrollTo(target);
+  }
+
+  // MOHAMED: simple keyboard shortcuts on the help page:
+  // "/" focuses the search box, "Esc" clears the current search term.
+  @HostListener('document:keydown', ['$event'])
+  handleKeydown(event: KeyboardEvent): void {
+    const key: string = event.key;
+
+    // Ignore shortcuts when user is already typing in an input/textarea/contentEditable
+    const target = event.target as HTMLElement | null;
+    const tagName = target?.tagName?.toLowerCase();
+    const isTypingContext =
+      tagName === 'input' || tagName === 'textarea' || target?.isContentEditable;
+
+    if (isTypingContext) {
+      return;
+    }
+
+    if (key === '/') {
+      event.preventDefault();
+      if (this.searchInput?.nativeElement) {
+        this.searchInput.nativeElement.focus();
+      }
+    } else if (key === 'Escape') {
+      if (this.searchTerm) {
+        this.clear();
+      }
+    }
+  }
+
+  // MOHAMED: copy the support email address to the browser clipboard
+  copySupportEmail(): void {
+    const email: string = this.supportEmail;
+
+    if (navigator && navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(email)
+        .then(() => {
+          this.copyStatus = 'Copied!';
+          setTimeout(() => this.copyStatus = '', 2000);
+        })
+        .catch(() => {
+          this.copyStatus = 'Copy failed';
+          setTimeout(() => this.copyStatus = '', 2000);
+        });
+    } else {
+      this.copyStatus = 'Copy not supported in this browser';
+      setTimeout(() => this.copyStatus = '', 2500);
+    }
   }
 
   expandQuestionTab(): void {
